@@ -6,6 +6,12 @@ along with some sample data from FlyEM (http://janelia.org/team-project/fly-em)
 and their efforts to reconstruct neurons from the Drosophila medulla prepared
 using FIB-SEM imaging.  The h5 files and xml need to be unzipped before using.  
 
+There are three EM data samples from the medulla in 'training_sample1', 'training_sample2',
+and 'validation_sample'.  While any of these sample could be used as a validation stack or
+training stack, in our workflow, we have used the first sample to train a boundary
+classifier using Ilastik, the second sample to train our agglomeration using neuroproof, and the validation
+stack to test our agglomeration and analysis algorithms in neuroproof.
+
 ## 1.  Boundary Training
 
 The 'training_sample1' directory contains a volume that was used to train a boundary
@@ -68,6 +74,10 @@ calling 'neuroproof_graph_predict'. To run this algorithm, one needs an agglomer
 classifier as produced in #2, an over-segmented volume to be segmented, and a prediction
 file.  As before, this over-segmented volume and prediction file will be produced
 using Gala which needs a boundary classifier (#1) and an initial image volume.
+(We provide the oversegmented volume for convencience in 'validation_sample/oversegmented_stack_labels.h5',
+but omit including the boundary prediction for this volume due to its large
+size.  To run the following example with the validaation sample, one will need
+to run gala over its original grayscales.)
 
 neuroproof_graph_predict |oversegmented_labels| |prediction| |classifier| 
 
