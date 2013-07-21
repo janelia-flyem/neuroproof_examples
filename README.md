@@ -36,8 +36,8 @@ does not support this operation; however, the open-source tool Gala
 classification file produced by Ilastik and an image volume to produce an
 initial oversegmented stack.  An example of how Gala could be called:
 
-gala-segmentation-pipeline -I '<graymaps>/*.png' --ilp-file <boundary classifier> --enable-gen-supervoxels
-                --enable-gen-agglomeration --enable-gen-pixel --seed-size 5 <output directory> --segmentation-thresholds 0.0 
+gala-segmentation-pipeline -I '|graymaps|/*.png' --ilp-file |boundary classifier| --enable-gen-supervoxels
+                --enable-gen-agglomeration --enable-gen-pixel --seed-size 5 |output directory| --segmentation-thresholds 0.0 
 
 The output directory will contain a label volume, as well as, a prediction file and
 other data not essential for agglomeration training.
@@ -48,12 +48,12 @@ can be called to produce a prediction using a strategy similar to
 uses generates a classifier to be used if mitochondria labels are provided
 in channel 3 and one desires to classify edges using two passes:
 
-neuroproof_graph_learn <oversegmented_labels> <prediction> <groundtruth> --strategy_type 1
+neuroproof_graph_learn |oversegmented_labels| |prediction| |groundtruth| --strategy_type 1
 
 If classification that does not consider mitochondria information is desired
 the following can be run:
 
-neuroproof_graph_learn <oversegmented_labels> <prediction> <groundtruth> --strategy_type 2 --num_iterations 5
+neuroproof_graph_learn |oversegmented_labels| |prediction| |groundtruth| --strategy_type 2 --num_iterations 5
 
 The output of these procedures is an agglomeration classifier.  We provide example
 classifiers produced from the neuroproof using these two commands -- 'mito_aware.xml'
@@ -69,7 +69,7 @@ classifier as produced in #2, an over-segmented volume to be segmented, and a pr
 file.  As before, this over-segmented volume and prediction file will be produced
 using Gala which needs a boundary classifier (#1) and an initial image volume.
 
-neuroproof_graph_predict <oversegmented_labels> <prediction> <classifier> 
+neuroproof_graph_predict |oversegmented_labels| |prediction| |classifier| 
 
 This will produce two files: a segmented label volume and graph.json which describes
 the certainty of an edge be a true edge in the graph.  This graph file can be
@@ -97,7 +97,7 @@ and the overall uncertainty of the segmentation as defined in [Plaza '12]
 To compare the segmentation to ground truth using the similarity
 metric Variance of Information (VI), one can issue the following command:
 
-neuroproof_graph_analyze_gt <segmentation> <groundtruth>
+neuroproof_graph_analyze_gt |segmentation| |groundtruth|
 
 We provide a ground-truth labeling in 'validation_sample/groundtruth.h5'
 and a test segmentation in 'validation_sample/results/segmentation.h5'
