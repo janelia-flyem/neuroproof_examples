@@ -113,4 +113,66 @@ We provide a ground-truth labeling in 'validation_sample/groundtruth.h5'
 and a test segmentation in 'validation_sample/results/segmentation.h5'
 to allow one to test these command.
 
+## 5. GUI stack viewer
+
+NeuroProof provides a front-end for viewing the results of segmentation
+and comparing that segmentation to ground truth.  It also provides the framework
+for modifying the segmentation manually.  This manual modification depends
+on the prioritization algorithm used and is a work in progress.
+
+To launch the stack viewer:
+
+neuroproof_stack_viwer
+
+This will launch a GUI that allows one to load or create a new stack session
+for viewing a segmentation.  If one already has a saved stack session, one could
+call:
+
+neuroproof_stack_viewer --session-name <directory of session>
+
+To create a new session, click on File->New Session.  The GUI will prompt the user
+for a list of PNG or JPG files corresponding to a stack of grayscale images.  Navigate
+to a directory with a set of these images, select all of the files and click okay.
+For now, this list of grayscale files must be sortable in the order in which they
+should be displayed.
+After this, the user will be given another prompt for the label volume (segmentation).
+For instance, this label volume could be the segmentation h5 file produced by the neuroproof
+predict executable.
+
+Note: users should not try to open volumes much bigger than 500x500x500 (as in this
+example).  The stack viewer loads the whole volume in memory and is meant to explore
+aspects of the segmentation very efficiently.
+
+The user will see a planar viewer of the segmentation with controls and a 3D viewer
+on the left side.  Only use the 3D viewer if necessary since it will take a couple of
+seconds to open.  Future improvements to the viewer might look to optimize this loading
+time considerably.  Options->Shortcuts show a list of keyboard or mouse shortcuts for
+the viewer.  If a user shift clicks a body, just that body will show.  Multiple bodies
+can be selected as well.  These are the bodies that will appear in the 3D window if
+the window is enabled.  The 3D window can be popped out and resized as desired.
+
+If a user wants to modify the segmentation, they can click on the training mode.  This
+takes the user to a sequencer that orders pairs of bodies to examine.  The training
+mode can only be added if a session location has been created 'File->Save As Session'.
+The training mode could be used to refine the segmentation in theory but is meant for
+training a classifier.  This capability will be expanded on in the future but is just
+a placeholder now.
+
+If a user wants to view their segmentation and also a ground truth labeling, a ground
+truth can be associated with the session by clicking 'File->Add GT'.  This ground
+truth might have been optained using segmentation revision tools such as
+[Raveler](https://openwiki.janelia.org/wiki/display/flyem/Raveler).
+
+In this example directory, use the grayscales from validation_sample/grayscale_maps
+and the segmentation from validation_sample/results/segmentation.h5 (unzip first).
+For ground truth, use validation_sample/groundtruth.h5 (unzip first).
+
+
+
+
+
+
+
+
+
 
