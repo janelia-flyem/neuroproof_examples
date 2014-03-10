@@ -1,4 +1,4 @@
-# Examples for NeuroProof
+# Examples for NeuroProof [![Picture](https://raw.github.com/janelia-flyem/janelia-flyem.github.com/master/images/gray_janelia_logo.png)](http://janelia.org/)
 
 This directory contains examples for how to run the neuroproof
 (https://github.com/janelia-flyem/NeuroProof) utilities
