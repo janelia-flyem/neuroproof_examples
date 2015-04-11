@@ -1,10 +1,10 @@
-# Examples for NeuroProof [![Picture](https://raw.github.com/janelia-flyem/janelia-flyem.github.com/master/images/gray_janelia_logo.png)](http://janelia.org/)
+# Examples for NeuroProof [![Picture](https://raw.github.com/janelia-flyem/janelia-flyem.github.com/master/images/HHMI_Janelia_Color_Alternate_180x40.png)](http://www.janelia.org)
 
 This directory contains examples for how to run the neuroproof
 (https://github.com/janelia-flyem/NeuroProof) utilities
 along with some sample data from FlyEM (http://janelia.org/team-project/fly-em)
 and their efforts to reconstruct neurons from the Drosophila medulla prepared
-using FIB-SEM imaging.  The h5 files and xml need to be unzipped before using.  
+using FIB-SEM imaging.  The h5 files and xml need to be unzipped before using.  The h5 file contain segmentation as a combination of two datasets: 'stack' and 'transforms'.  'stack' is a 3D volume (z,y,x) of supervoxel labels.  'transforms' is a mapping of supervoxels to bodies.  In some cases, 'transforms' is simply an identify and 'stack' represents the final segmentation or ground truth.
 
 There are three EM data samples from the medulla in 'training_sample1', 'training_sample2',
 and 'validation_sample'.  While any of these sample could be used as a validation stack or
