@@ -50,11 +50,11 @@ other data not essential for agglomeration training.
 
 Once an over-segmentation and ground-truth labeling exists, 'neuroproof_graph_train'
 can be called to produce a prediction using a strategy similar to
-[Nunez-Iglesias et al '13] (http://arxiv.org/abs/1303.6163).  The following
-uses generates a classifier to be used if mitochondria labels are provided
-in channel 3 and one desires to classify edges using two passes:
+[Nunez-Iglesias et al '13] (http://arxiv.org/abs/1303.6163).  
 
-neuroproof_graph_learn |oversegmented_labels| |prediction| |groundtruth| --strategy_type 1
+For segmentation of EM images, the following command can be used to train a superpixel boundary classifier in a context-aware fashion as described in [Parag, et al '15](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0125825) provided mitochondria detection. 
+
+neuroproof_graph_learn |oversegmented_labels| |prediction| |groundtruth| --num_iterations 1
 
 If classification that does not consider mitochondria information is desired
 the following can be run:
