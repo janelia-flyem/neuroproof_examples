@@ -48,23 +48,20 @@ gala-segmentation-pipeline -I '|graymaps|/*.png' --ilp-file |boundary classifier
 The output directory will contain a label volume, as well as, a prediction file and
 other data not essential for agglomeration training.
 
-Once an over-segmentation and ground-truth labeling exists, 'neuroproof_graph_train'
-can be called to produce a prediction using a strategy similar to
-[Nunez-Iglesias et al '13] (http://arxiv.org/abs/1303.6163).  
-
-For segmentation of EM images, the following command can be used to train a superpixel boundary classifier in a context-aware fashion as described in [Parag, et al '15](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0125825) provided mitochondria detection. 
+Once an over-segmentation and ground-truth labeling exists, 'neuroproof_graph_learn' will learn a supervoxel boundary classifier for agglomeration using algorithms proposed by  [Parag, et al '15](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0125825), 
+[Nunez-Iglesias et al '13] (http://arxiv.org/abs/1303.6163).  For segmentation of EM images, the following command can be used to train a superpixel boundary classifier in a context-aware fashion as described in [Parag, et al '15](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0125825) provided mitochondria detection. Setting 'num_iterations' to 1 enforces a "flat" learning -- only the supervoxels in the original over-segmentation are used for learning the boundary classifier.
 
 neuroproof_graph_learn |oversegmented_labels| |prediction| |groundtruth| --num_iterations 1
 
-If classification that does not consider mitochondria information is desired
-the following can be run:
+Context-aware training with mitochondria prediction can be disabled by setting 'use_mito' parameter to 0. By setting the 'num_iterations' to more than 1, one can augment the training set by agglomerating the over-segmented volume with the boundary classifier trained in the previous iteration as discussed in [Nunez-Iglesias et al '13] (http://arxiv.org/abs/1303.6163). 
 
-neuroproof_graph_learn |oversegmented_labels| |prediction| |groundtruth| --strategy_type 2 --num_iterations 5
+neuroproof_graph_learn |oversegmented_labels| |prediction| |groundtruth|  --use_mito 0 --num_iterations 5
 
-The output of these procedures is an agglomeration classifier.  We provide example
+The output of these procedures is a superpixel boundary  classifier.  We provide example
 classifiers produced from the neuroproof using these two commands -- 'mito_aware.xml'
 and  'nomito_aware.h5' respectively.
 
+It is also possible to train the boundary classifier interactively when an exhaustive segmentation groundtruth is not available using the algorithm proposed in [Parag, et.al. 14] (http://www.researchgate.net/publication/265683774_Small_Sample_Learning_of_Superpixel_Classifiers_for_EM_Segmentation). This option has been implemented for 3D data in this package. Please let us know if you wish use this feature.
 
 ## 3.  Agglomeration Procedure
 
@@ -80,6 +77,8 @@ size.  To run the following example with the validaation sample, one will need
 to run gala over its original grayscales.)
 
 neuroproof_graph_predict |oversegmented_labels| |prediction| |classifier| 
+
+By default, this code assumes the channel 2 contains the pixewise detection confidences for mitochondria (channel 0: membrane, channel 1:cytoplasm probabilities). The agglomeration is performaed in two phases, as described in [Parag, et al '15](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0125825). To disable this mode, add the following option "--merge_mito 0" after the above command. There are several thresholds that can also be defined for the aglomeration, check the code for details.
 
 This will produce two files: a segmented label volume and graph.json which describes
 the certainty of an edge be a true edge in the graph.  This graph file can be
